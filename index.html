@@ -8,9 +8,46 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div class="container">
+        <div class="card border-0 bg-dark mt-3">
+            <div class="card-body">
+                <h2 class="card-title display-4 text-light">Bookmarker</h2>
+            </div>
+        </div>
+        <div class="jumbotron text-center">
+            <h1 class="display-6">Bookmark your favourite sites!</h1>
+            <form class="d-flex flex-column align-items-center ">
+                <div class="form-group">
+                    <label>Site Name</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Site URL</label>
+                    <input type="text" class="form-control">
+                </div>
+                <button class="btn btn-info btn-lg">Submit</button>
+            </form>
+        </div>
+        <div class="bookmarks">
+            <div class="card mx-auto flex-row justify-content-around align-items-center p-3 w-75 border-dark">
+                <h2>Youtube</h2>
+                <div class="buttons-container">
+                    <button class="btn btn-dark">Visit</button>
+                    <button class="btn border border-dark">Delete</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="card border-0">
+            <hr>
+            <footer>Bookmarker &copy 2019</footer>
+        </div>
+
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
