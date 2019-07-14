@@ -1,5 +1,6 @@
 const nameInput = document.getElementById('nameInput');
 const urlInput = document.getElementById('urlInput');
+let newTab = false;
 
 let fetchBookmarks = () => {
     if (localStorage.getItem('bookmarks') != null) {
@@ -10,7 +11,7 @@ let fetchBookmarks = () => {
             bookmarksResults.innerHTML += `<div class="card mx-auto flex-row justify-content-around align-items-center p-3 m-2 w-75 border-dark">
             <h2>${bookmark.name}</h2>
             <div class="buttons-container">
-            <a href=${bookmark.url === "" ? "#" : bookmark.url} class= "btn btn-dark">Visit</a>
+            <a href=${bookmark.url === "" ? "#" : bookmark.url} ${newTab ? `target="_blank"` : null} class="btn btn-dark">Visit</a>
             <button class="btn border border-dark" onclick="deleteBookmark('${bookmark.url}')">Delete</button>
             </div > </div>`
         });
@@ -65,6 +66,11 @@ let saveBookmark = (e) => {
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
     }
     e.preventDefault();
+    fetchBookmarks();
+}
+
+let openNewTab = () => {
+    newTab = !newTab;
     fetchBookmarks();
 }
 
