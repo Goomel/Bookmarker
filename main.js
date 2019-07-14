@@ -30,21 +30,27 @@ let saveBookmark = (e) => {
 let fetchBookmarks = () => {
     if (localStorage.getItem('bookmarks') != null) {
         let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-
-        let bookmarksResults = document.getElementById('bookmarksResults');
+        const bookmarksResults = document.getElementById('bookmarksResults');
         bookmarksResults.innerHTML = "";
         bookmarks.forEach(bookmark => {
-            console.log(bookmark.name);
-            console.log(bookmark.url);
             bookmarksResults.innerHTML += `<div class="card mx-auto flex-row justify-content-around align-items-center p-3 m-2 w-75 border-dark">
             <h2>${bookmark.name}</h2>
             <div class="buttons-container">
-                <a href=${bookmark.url === "" ? "#" : bookmark.url
-                } class= "btn btn-dark" > Visit</a >
-        <button class="btn border border-dark">Delete</button>
-            </div > </div`
+            <a href=${bookmark.url === "" ? "#" : bookmark.url} class= "btn btn-dark">Visit</a>
+            <button class="btn border border-dark" onclick="deleteBookmark('${bookmark.url}')">Delete</button>
+            </div > </div>`
         });
     }
+}
+
+let deleteBookmark = (url) => {
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    //Loop throught bookmarks
+    bookmarks.forEach((bookmark, i) => {
+        if (bookmark.url == url) bookmarks.splice(i, 1);
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    })
+    fetchBookmarks();
 }
 
 window.addEventListener('load', fetchBookmarks);
