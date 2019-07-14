@@ -1,32 +1,6 @@
 const nameInput = document.getElementById('nameInput');
 const urlInput = document.getElementById('urlInput');
 
-let saveBookmark = (e) => {
-    siteName = nameInput.value;
-    siteUrl = urlInput.value;
-    nameInput.value = "";
-    urlInput.value = "";
-
-    let bookmark = {
-        name: siteName,
-        url: siteUrl,
-    }
-
-    //Local storage
-    if (localStorage.getItem('bookmarks') === null) {
-        let bookmarks = [];
-        bookmarks.push(bookmark)
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    } else {
-        let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-        bookmarks.push(bookmark);
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
-    }
-
-    e.preventDefault();
-    fetchBookmarks();
-}
-
 let fetchBookmarks = () => {
     if (localStorage.getItem('bookmarks') != null) {
         let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
@@ -42,7 +16,6 @@ let fetchBookmarks = () => {
         });
     }
 }
-
 let deleteBookmark = (url) => {
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
     //Loop throught bookmarks
@@ -50,6 +23,48 @@ let deleteBookmark = (url) => {
         if (bookmark.url == url) bookmarks.splice(i, 1);
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     })
+    fetchBookmarks();
+}
+let validateForm = (siteName, siteUrl) => {
+    if (!siteName || !siteUrl) {
+        alert("Please fill in the form");
+        return false;
+    }
+
+    let expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+    let regex = new RegExp(expression);
+
+    if (!siteUrl.match(regex)) {
+        alert("Please use a valid URL");
+        return false;
+    }
+    return true;
+}
+
+let saveBookmark = (e) => {
+    siteName = nameInput.value;
+    siteUrl = urlInput.value;
+    if (!validateForm(siteName, siteUrl)) {
+        return false;
+    }
+    nameInput.value = "";
+    urlInput.value = "";
+    let bookmark = {
+        name: siteName,
+        url: siteUrl,
+    }
+
+    //Local storage
+    if (localStorage.getItem('bookmarks') === null) {
+        let bookmarks = [];
+        bookmarks.push(bookmark)
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    } else {
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+        bookmarks.push(bookmark);
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
+    }
+    e.preventDefault();
     fetchBookmarks();
 }
 
